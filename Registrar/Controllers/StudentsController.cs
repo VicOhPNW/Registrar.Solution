@@ -11,6 +11,7 @@ namespace Registrar.Controllers
     public ActionResult Index()
     {
       List<Student> allStudents = Student.GetAll();
+      // List<Course> allCourses = Course.GetAll();
       return View(allStudents);
     }
 
@@ -51,6 +52,14 @@ namespace Registrar.Controllers
           student.AddCourse(course);
           return RedirectToAction("Details",  new { id = studentId });
       }
+
+    [HttpGet("/students/{id}/done/{courseId}")]
+    public ActionResult Done(int id, int courseId)
+    {
+      Course doneCourse = Course.Find(courseId);
+      doneCourse.Done();
+      return RedirectToAction("Details", new {id = id});
+    }
 
   }
 }

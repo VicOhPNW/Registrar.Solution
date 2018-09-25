@@ -51,5 +51,6 @@ namespace Registrar.Controllers
           course.AddStudent(student);
           return RedirectToAction("Details",  new { id = courseId });
       }
+
   }
 }

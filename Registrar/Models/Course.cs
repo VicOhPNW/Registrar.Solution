@@ -10,12 +10,14 @@ namespace Registrar.Models
     public int id{get; set; }
     public string name{get; set; }
     public string courseNumber{get; set; }
+    public bool complete{get; set; }
 
     public Course(string newName, string newCourseNumber, int newId = 0)
     {
       name = newName;
       courseNumber = newCourseNumber;
       id = newId;
+      complete = false;
     }
 
     public override bool Equals(System.Object otherCourse)
@@ -181,6 +183,33 @@ namespace Registrar.Models
             conn.Dispose();
         }
         return students;
+      }
+      public void Done()
+      {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"UPDATE courses SET status = @status WHERE id = @courseId;";
+
+        MySqlParameter statusParameter = new MySqlParameter();
+        statusParameter.ParameterName = "@status";
+        statusParameter.Value = true;
+        cmd.Parameters.Add(statusParameter);
+        // cmd.Parameters.AddWithValue("@status", true);
+
+        MySqlParameter courseIdParameter = new MySqlParameter();
+        // courseIdParameter.ParameterName = "@courseId";
+        // courseIdParameter.Value = id;
+        cmd.Parameters.AddWithValue("@courseIdParameter", id);
+
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+
       }
   }
 }
