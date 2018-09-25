@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+<h1>Courses</h1>
+
+@if (Model.Count == 0)
+{
+ <h4>There are no Courses available.</h4>
+}
+
+@foreach(var course in Model)
+{
+  <a href="/courses/@course.id"><h4>@course.name and @course.courseNumber </h4></a>
+}
+
+<a href = "/courses/new">Add a new course</a>
+</br>
+<a href = "/">Back to Homepage</a>

@@ -1,0 +1,30 @@
+@using Registrar.Models;
+
+<h1>Courses</h1>
+<h2>Course: @Model["selectedCourse"].name</h2>
+
+
+<h4>Add a student to this class:</h4>
+<form action='/courses/@Model["selectedCourse"].id/students/new' method='post'>
+  <label for='studentId'>Select a student</label>
+  <select id='studentId' name='studentId' type='text'>
+    @foreach (var student in @Model["allStudents"])
+    {
+      <option value='@student.id'>@student.name</option>
+    }
+  </select>
+  <button type='submit'>Add</button>
+</form>
+
+
+
+<p><a href="/">Return to Main Page</a></p>
+
+<h2>Students in @Model["selectedCourse"].name: </h2>
+
+  @foreach(var student in @Model["courseStudents"])
+  {
+    <li>@student.name</li>
+  }
+
+<hr/>
